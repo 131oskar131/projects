@@ -1,5 +1,9 @@
 # Port Scanner 
 
+- ### Project goal
+  - To develop a modular port scanner in Python that can analyse hosts on the network, detect open ports and clearly display the services found.
+<br>
+
 - ### Explanation for the files:
   - p_scanner.py --> the script for the portscanner in python format
   - requirements.txt --> in this file we save all the used libraries
@@ -8,7 +12,7 @@
   - these dir will also follow in the project: log, config, src, scans, tests
 
   
-  
+
   
   
  
