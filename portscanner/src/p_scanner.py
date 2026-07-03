@@ -1,6 +1,9 @@
 #port scanner
 
 import socket 
+import threading
+
+lock = threading.Lock()
 
 def scan_port(ip, port):
     try:
@@ -11,13 +14,19 @@ def scan_port(ip, port):
 
 
 
-        if result == 0:
-            return True
-        else:
-            return False
+            if result == 0:
+                return True
+            else:
+                return False
 
     except Exception as e:
         return f"ERROR: {e}"
+
+def scan_port_thread(ip, port, open_ports):
+    if scan_port(ip, port):
+        with lock:
+            open_ports.append(port)
+        
 
 def run():
     print("=" * 40)
@@ -33,14 +42,22 @@ def run():
     print(f"\nTarget: {ip}")
     print(f"Range: {port_0} - {port_1}")
 
+    threads = []
+    open_ports = []
+
     print("\nScanning...\n")
 
     for port in range(port_0, port_1 + 1):
-        if scan_port(ip, port):
-            print(f"[+] {port} OPEN")
-            open_ports.append(port)
-        else:
-            print(f"[-] {port} CLOSED")
+        t = threading.Thread(
+            target=scan_port_thread,
+            args=(ip, port, open_ports)
+        )
+
+        threads.append(t)
+        t.start()
+
+    for t in threads:
+        t.join()
 
     print("\n" + "-" * 40)
     print(f"Open Ports: {open_ports}")
