@@ -20,20 +20,29 @@ def scan_port(ip, port):
         return f"ERROR: {e}"
 
 def run():
-    print("=== Python Port Scanner ===")
+    print("=" * 40)
+    print("      PYTHON PORT SCANNER")
+    print("=" * 40)
 
-    ip = input("Target IP: ")
+    ip = input("\nTarget IP: ")
     port_0 = int(input("Target Ports From: "))
     port_1 = int(input("Target Ports To: "))
+
     open_ports = []
 
-    print(f"Scanning {ip}:{port_0} - {port_1}")
+    print(f"\nTarget: {ip}")
+    print(f"Range: {port_0} - {port_1}")
+
+    print("\nScanning...\n")
 
     for port in range(port_0, port_1 + 1):
         if scan_port(ip, port):
+            print(f"[+] {port} OPEN")
             open_ports.append(port)
+        else:
+            print(f"[-] {port} CLOSED")
 
-    print("----Open Ports----")
-    for port in open_ports:
-        print(f"[+] {port}")
-    print("------------------")
+    print("\n" + "-" * 40)
+    print(f"Open Ports: {open_ports}")
+    print("Scan finished.")
+    print("-" * 40)
