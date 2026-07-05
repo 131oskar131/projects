@@ -41,7 +41,7 @@ The project is designed as a learning journey through networking, Python and cyb
 ```
 PortScanner/
 
-│── p_scanner.py          # Main program
+│── main.py               # Main program
 
 │── requirements.txt      # Required Python libraries
 
@@ -54,6 +54,8 @@ PortScanner/
 ├── docs/                 # Documentation
 ├── logs/                 # Log files
 ├── scans/                # Saved scan results
+├────── p_scanner.py      # main code for the scanner
+├────── banner.py.        # code for the banner grabbing
 ├── src/                  # Source code modules
 └── tests/                # Unit tests
 ```
@@ -62,9 +64,17 @@ PortScanner/
 
 # File Description
 
-### p_scanner.py
+### main.py
 
 Main entry point of the application.
+
+### p_scanner.py
+
+the code for the scan system (portscanning, multi-threading).
+
+### banner.py
+
+code for the banner grabbing, will be used in the p_scanner.py code.
 
 ### requirements.txt
 
