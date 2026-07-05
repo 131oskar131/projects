@@ -4,6 +4,7 @@ import socket
 import threading
 from concurrent.futures import ThreadPoolExecutor
 import time
+from src.banner import banner_grabbing
 
 lock = threading.Lock()
 
@@ -25,7 +26,8 @@ def scan_port(ip, port):
 def scan_port_thread(ip, port, open_ports):
     if scan_port(ip, port):
         with lock:
-            open_ports.append(port)
+            open_ports[port] = banner_grabbing(ip, port)
+
         
 
 def run():
@@ -39,7 +41,7 @@ def run():
 
     print(f"\nTarget: {ip}")
     print(f"Range: {port_0} - {port_1}")
-    open_ports = []
+    open_ports = {}
 
     start = time.time()
     print("\nScanning...\n")
@@ -56,9 +58,11 @@ def run():
 
     end = time.time()
 
-    print("\n" + "-" * 40)
-    for port in open_ports:
-        print(f"{port}  OPEN")
+    print("\n" + "=" * 40)
+    print("-" * 40)
+    for port, banner in open_ports.items():
+        print(f"{port}  OPEN  {banner}")
+    print("-" * 40)
     print("Scan finished.")
     print(f"in {end - start:.4f} seconds")
-    print("-" * 40)
+    print("=" * 40)
