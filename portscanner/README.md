@@ -53,10 +53,10 @@ PortScanner/
 ├── config/               # Configuration files
 ├── docs/                 # Documentation
 ├── logs/                 # Log files
-├── scans/                # Saved scan results
+├── src/                  # Source code modules
 ├────── p_scanner.py      # main code for the scanner
 ├────── banner.py.        # code for the banner grabbing
-├── src/                  # Source code modules
+├── scans/                # Saved scan results
 └── tests/                # Unit tests
 ```
 
