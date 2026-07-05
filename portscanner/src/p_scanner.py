@@ -2,6 +2,7 @@
 
 import socket 
 import threading
+from concurrent.futures import ThreadPoolExecutor
 
 lock = threading.Lock()
 
@@ -11,8 +12,6 @@ def scan_port(ip, port):
             sock.settimeout(1)
 
             result = sock.connect_ex((ip, port))
-
-
 
             if result == 0:
                 return True
@@ -37,27 +36,22 @@ def run():
     port_0 = int(input("Target Ports From: "))
     port_1 = int(input("Target Ports To: "))
 
-    open_ports = []
-
     print(f"\nTarget: {ip}")
     print(f"Range: {port_0} - {port_1}")
-
-    threads = []
     open_ports = []
 
     print("\nScanning...\n")
 
-    for port in range(port_0, port_1 + 1):
-        t = threading.Thread(
-            target=scan_port_thread,
-            args=(ip, port, open_ports)
-        )
+    with ThreadPoolExecutor(max_workers=100) as executor:
 
-        threads.append(t)
-        t.start()
+        for port in range(port_0, port_1 + 1):
 
-    for t in threads:
-        t.join()
+            executor.submit(
+                scan_port_thread,
+                ip,
+                port,
+                open_ports
+            )
 
     print("\n" + "-" * 40)
     print(f"Open Ports: {open_ports}")
