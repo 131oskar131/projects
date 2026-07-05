@@ -57,7 +57,8 @@ def run():
     end = time.time()
 
     print("\n" + "-" * 40)
-    print(f"Open Ports: {open_ports}")
+    for port in open_ports:
+        print(f"{port}  OPEN")
     print("Scan finished.")
     print(f"in {end - start:.4f} seconds")
     print("-" * 40)
