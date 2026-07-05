@@ -3,6 +3,7 @@
 import socket 
 import threading
 from concurrent.futures import ThreadPoolExecutor
+import time
 
 lock = threading.Lock()
 
@@ -40,12 +41,12 @@ def run():
     print(f"Range: {port_0} - {port_1}")
     open_ports = []
 
+    start = time.time()
     print("\nScanning...\n")
 
     with ThreadPoolExecutor(max_workers=100) as executor:
 
         for port in range(port_0, port_1 + 1):
-
             executor.submit(
                 scan_port_thread,
                 ip,
@@ -53,7 +54,10 @@ def run():
                 open_ports
             )
 
+    end = time.time()
+
     print("\n" + "-" * 40)
     print(f"Open Ports: {open_ports}")
     print("Scan finished.")
+    print(f"in {end - start:.4f} seconds")
     print("-" * 40)
